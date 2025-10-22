@@ -59,7 +59,7 @@ export default function OrderSuccessPage() {
             <Package className="h-16 w-16 text-gray-400 mx-auto mb-4" />
             <h1 className="text-2xl font-bold text-gray-900 mb-4">Order not found</h1>
             <p className="text-gray-600 mb-6">
-              The order you're looking for doesn't exist or you don't have permission to view it.
+              {`The order you're looking for doesn't exist or you don't have permission to view it.`}
             </p>
             <Link href="/orders">
               <Button>View My Orders</Button>
@@ -189,7 +189,7 @@ export default function OrderSuccessPage() {
           {/* Next Steps */}
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>What's Next?</CardTitle>
+              <CardTitle>{`What's Next?`}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -200,7 +200,7 @@ export default function OrderSuccessPage() {
                   <div>
                     <p className="font-medium text-gray-900">Order Confirmation</p>
                     <p className="text-sm text-gray-600">
-                      You'll receive an email confirmation with your order details.
+                      {`You'll receive an email confirmation with your order details.`}
                     </p>
                   </div>
                 </div>
@@ -211,7 +211,7 @@ export default function OrderSuccessPage() {
                   <div>
                     <p className="font-medium text-gray-900">Processing</p>
                     <p className="text-sm text-gray-600">
-                      We'll prepare your order for shipment within 1-2 business days.
+                      {`We'll prepare your order for shipment within 1-2 business days.`}
                     </p>
                   </div>
                 </div>
@@ -222,7 +222,7 @@ export default function OrderSuccessPage() {
                   <div>
                     <p className="font-medium text-gray-900">Shipping</p>
                     <p className="text-sm text-gray-600">
-                      Your order will be shipped and you'll receive tracking information.
+                      {`Your order will be shipped and you'll receive tracking information.`}
                     </p>
                   </div>
                 </div>

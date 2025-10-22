@@ -104,7 +104,7 @@ export default function OrdersPage() {
     }
   }
 
-  const getStatusColor = (status: string) => {
+  const getStatusColor = (status: string): 'default' | 'secondary' | 'destructive' | 'outline' | 'success' | 'warning' => {
     switch (status) {
       case 'pending':
         return 'warning'
@@ -195,7 +195,7 @@ export default function OrdersPage() {
             <Package className="h-16 w-16 text-gray-400 mx-auto mb-4" />
             <h2 className="text-2xl font-bold text-gray-900 mb-4">No orders yet</h2>
             <p className="text-gray-600 mb-6">
-              You haven't placed any orders yet. Start shopping to see your orders here.
+              {`You haven't placed any orders yet. Start shopping to see your orders here.`}
             </p>
             <Link href="/products">
               <Button>Start Shopping</Button>
@@ -225,7 +225,9 @@ export default function OrdersPage() {
                         Placed on {formatDate(order.created_at)}
                       </p>
                     </div>
-                    <Badge variant={getStatusColor(order.status) as any} className="flex items-center gap-1">
+                    
+                    <Badge 
+                    variant={getStatusColor(order.status)} className="flex items-center gap-1">
                       {getStatusIcon(order.status)}
                       {getStatusText(order.status)}
                     </Badge>

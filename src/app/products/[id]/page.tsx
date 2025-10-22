@@ -105,7 +105,7 @@ export default function ProductDetailPage() {
             <div className="text-6xl mb-4">📱</div>
             <h1 className="text-2xl font-bold text-gray-900 mb-4">Product Not Found</h1>
             <p className="text-gray-600 mb-6">
-              The product you're looking for doesn't exist or has been removed.
+              {`The product you're looking for doesn't exist or has been removed.`}
             </p>
             <Button onClick={() => router.push('/products')}>
               <ArrowLeft className="h-4 w-4 mr-2" />

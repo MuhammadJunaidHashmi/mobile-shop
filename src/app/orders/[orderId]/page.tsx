@@ -164,7 +164,7 @@ export default function OrderDetailPage() {
             <div className="text-6xl mb-4">📦</div>
             <h1 className="text-2xl font-bold text-gray-900 mb-4">Order Not Found</h1>
             <p className="text-gray-600 mb-6">
-              The order you're looking for doesn't exist or you don't have permission to view it.
+              {`The order you're looking for doesn't exist or you don't have permission to view it.`}
             </p>
             <Button onClick={() => router.push('/orders')}>
               <ArrowLeft className="h-4 w-4 mr-2" />
