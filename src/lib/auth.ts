@@ -158,4 +158,3 @@ export const auth = {
   }
 }
 
-export type { User }
