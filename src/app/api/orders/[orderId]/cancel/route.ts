@@ -3,10 +3,10 @@ import { orderService } from '@/lib/order-service'
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { orderId: string } }
+  { params }: { params: Promise<{ orderId: string }> }
 ) {
   try {
-    const { orderId } = params
+    const { orderId } = await params
     const body = await request.json()
     const { userId } = body
 

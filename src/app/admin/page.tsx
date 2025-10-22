@@ -8,8 +8,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Layout } from '@/components/layout/layout'
 import { useAuth } from '@/lib/auth-context'
-import { supabase, Product, Order } from '@/lib/supabase'
+import { supabase, Product, Order, User } from '@/lib/supabase'
 import { formatPrice, formatDate } from '@/lib/utils'
+
+type OrderWithUser = Order & {
+  user?: User
+}
 
 export default function AdminPage() {
   const { user } = useAuth()
@@ -21,7 +25,7 @@ export default function AdminPage() {
     totalUsers: 0,
     totalRevenue: 0
   })
-  const [recentOrders, setRecentOrders] = useState<Order[]>([])
+  const [recentOrders, setRecentOrders] = useState<OrderWithUser[]>([])
   const [products, setProducts] = useState<Product[]>([])
   const [editingProduct, setEditingProduct] = useState<Product | null>(null)
   const [showAddModal, setShowAddModal] = useState(false)

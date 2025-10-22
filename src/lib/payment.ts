@@ -233,7 +233,7 @@ export class PaymentService {
   }
 
   // Mock payment for development/testing
-  private async mockPayment(paymentRequest: PaymentRequest): Promise<PaymentResponse> {
+  private async mockPayment(_paymentRequest: PaymentRequest): Promise<PaymentResponse> {
     console.log('Using mock payment for development')
     
     // Simulate API call delay

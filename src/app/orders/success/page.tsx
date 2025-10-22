@@ -180,7 +180,7 @@ export default function OrderSuccessPage() {
               <div className="space-y-2">
                 <p className="font-semibold">{order.shipping_address.name}</p>
                 <p>{order.shipping_address.address}</p>
-                <p>{order.shipping_address.city}, {order.shipping_address.postalCode}</p>
+                <p>{order.shipping_address.city}, {order.shipping_address.postal_code}</p>
                 <p>Phone: {order.shipping_address.phone}</p>
               </div>
             </CardContent>
