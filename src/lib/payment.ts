@@ -79,7 +79,7 @@ export class PaymentService {
       // Fallback to mock for development
       if (!this.isProduction) {
         console.log('Using mock payment for development')
-        return this.mockPayment(paymentRequest)
+        return this.mockPayment()
       }
       
       return {
@@ -233,7 +233,7 @@ export class PaymentService {
   }
 
   // Mock payment for development/testing
-  private async mockPayment(_paymentRequest: PaymentRequest): Promise<PaymentResponse> {
+  private async mockPayment(): Promise<PaymentResponse> {
     console.log('Using mock payment for development')
     
     // Simulate API call delay

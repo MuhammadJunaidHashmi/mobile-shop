@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { CheckCircle, Package, ArrowRight, Home } from 'lucide-react'
@@ -11,7 +11,7 @@ import { orderService } from '@/lib/order-service'
 import { Order } from '@/lib/supabase'
 import { formatPrice, formatDate } from '@/lib/utils'
 
-export default function OrderSuccessPage() {
+function OrderSuccessContent() {
   const searchParams = useSearchParams()
   const orderId = searchParams.get('orderId')
   const [order, setOrder] = useState<Order | null>(null)
@@ -265,5 +265,26 @@ export default function OrderSuccessPage() {
         </div>
       </div>
     </Layout>
+  )
+}
+
+export default function OrderSuccessPage() {
+  return (
+    <Suspense fallback={
+      <Layout>
+        <div className="container mx-auto px-4 py-12">
+          <div className="max-w-2xl mx-auto text-center">
+            <div className="animate-pulse">
+              <div className="h-16 w-16 bg-gray-200 rounded-full mx-auto mb-4"></div>
+              <div className="h-8 bg-gray-200 rounded w-64 mx-auto mb-4"></div>
+              <div className="h-4 bg-gray-200 rounded w-96 mx-auto mb-8"></div>
+              <div className="h-32 bg-gray-200 rounded-lg"></div>
+            </div>
+          </div>
+        </div>
+      </Layout>
+    }>
+      <OrderSuccessContent />
+    </Suspense>
   )
 }
