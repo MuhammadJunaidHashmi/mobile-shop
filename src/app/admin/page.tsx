@@ -278,7 +278,7 @@ export default function AdminPage() {
                     </div>
                     <div className="text-right">
                       <p className="font-semibold">{formatPrice(order.total_amount)}</p>
-                      <Badge variant={getStatusColor(order.status) as "default" | "destructive" | "outline" | "secondary" | "ghost"}>
+                      <Badge variant={getStatusColor(order.status)}>
                         {order.status}
                       </Badge>
                     </div>
