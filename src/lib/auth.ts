@@ -158,4 +158,4 @@ export const auth = {
   }
 }
 
-export type { Session, User }
+export type { User }
