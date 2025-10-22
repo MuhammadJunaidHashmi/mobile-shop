@@ -60,10 +60,20 @@ export class OrderService {
 
       // Update product stock quantities
       for (const item of request.items) {
+        // First get current stock
+        const { data: product, error: fetchError } = await supabase
+          .from('products')
+          .select('stock_quantity')
+          .eq('id', item.productId)
+          .single()
+
+        if (fetchError) throw fetchError
+
+        // Update with new stock quantity
         const { error: stockError } = await supabase
           .from('products')
           .update({
-            stock_quantity: supabase.raw(`stock_quantity - ${item.quantity}`)
+            stock_quantity: product.stock_quantity - item.quantity
           })
           .eq('id', item.productId)
 
@@ -214,10 +224,20 @@ export class OrderService {
       // Restore product stock quantities
       if (order.order_items) {
         for (const item of order.order_items) {
+          // First get current stock
+          const { data: product, error: fetchError } = await supabase
+            .from('products')
+            .select('stock_quantity')
+            .eq('id', item.product_id)
+            .single()
+
+          if (fetchError) throw fetchError
+
+          // Update with restored stock quantity
           const { error: stockError } = await supabase
             .from('products')
             .update({
-              stock_quantity: supabase.raw(`stock_quantity + ${item.quantity}`)
+              stock_quantity: product.stock_quantity + item.quantity
             })
             .eq('id', item.product_id)
 
