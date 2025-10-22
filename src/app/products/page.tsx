@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Filter, SortAsc, Grid, List } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -11,7 +11,7 @@ import { Layout } from '@/components/layout/layout'
 import { supabase, Product } from '@/lib/supabase'
 import { useCart } from '@/lib/cart-context'
 
-export default function ProductsPage() {
+function ProductsContent() {
   const searchParams = useSearchParams()
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
@@ -304,5 +304,28 @@ export default function ProductsPage() {
         </div>
       </div>
     </Layout>
+  )
+}
+
+export default function ProductsPage() {
+  return (
+    <Suspense fallback={
+      <Layout>
+        <div className="container mx-auto px-4 py-8">
+          <div className="animate-pulse space-y-6">
+            <div className="h-8 bg-gray-200 rounded w-48"></div>
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+              <div className="h-64 bg-gray-200 rounded-lg"></div>
+              <div className="lg:col-span-3 space-y-4">
+                <div className="h-32 bg-gray-200 rounded-lg"></div>
+                <div className="h-32 bg-gray-200 rounded-lg"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Layout>
+    }>
+      <ProductsContent />
+    </Suspense>
   )
 }
