@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
 import { ShoppingCart, Heart, Eye } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -16,7 +15,6 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product, onAddToCart }: ProductCardProps) {
-  const [isHovered, setIsHovered] = useState(false)
   const [isWishlisted, setIsWishlisted] = useState(false)
 
   const handleAddToCart = (e: React.MouseEvent) => {
@@ -40,8 +38,6 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
   return (
     <Card 
       className="group overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
       <div className="relative aspect-square overflow-hidden bg-gray-50 cursor-pointer" onClick={() => window.location.href = `/products/${product.id}`}>
         {product.images && product.images.length > 0 ? (

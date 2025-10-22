@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState, useCallback } from 'react'
 import { supabase, CartItem, Product } from './supabase'
 import { useAuth } from './auth-context'
 
@@ -22,16 +22,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true)
   const { user } = useAuth()
 
-  useEffect(() => {
-    if (user) {
-      fetchCartItems()
-    } else {
-      setItems([])
-      setLoading(false)
-    }
-  }, [user])
-
-  const fetchCartItems = async () => {
+  const fetchCartItems = useCallback(async () => {
     if (!user) return
 
     try {
@@ -50,7 +41,16 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     } finally {
       setLoading(false)
     }
-  }
+  }, [user])
+
+  useEffect(() => {
+    if (user) {
+      fetchCartItems()
+    } else {
+      setItems([])
+      setLoading(false)
+    }
+  }, [user, fetchCartItems])
 
   const addToCart = async (productId: string, quantity: number = 1) => {
     if (!user) {

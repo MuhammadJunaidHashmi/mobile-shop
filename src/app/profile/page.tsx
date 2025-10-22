@@ -1,8 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
-import { User, Mail, Phone, MapPin, Package, Settings, LogOut } from 'lucide-react'
+import { User, Mail, Phone, Package, Settings, LogOut } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -23,16 +23,7 @@ export default function ProfilePage() {
     phone: user?.phone || ''
   })
 
-  useEffect(() => {
-    if (!user) {
-      router.push('/auth/signin')
-      return
-    }
-
-    fetchUserData()
-  }, [user, router])
-
-  const fetchUserData = async () => {
+  const fetchUserData = useCallback(async () => {
     if (!user) return
 
     try {
@@ -64,7 +55,16 @@ export default function ProfilePage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [user])
+
+  useEffect(() => {
+    if (!user) {
+      router.push('/auth/signin')
+      return
+    }
+
+    fetchUserData()
+  }, [user, router, fetchUserData])
 
   const handleSaveProfile = async (e: React.FormEvent) => {
     e.preventDefault()

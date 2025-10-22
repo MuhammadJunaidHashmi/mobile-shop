@@ -1,6 +1,8 @@
 // Payment Gateway Integration for Pakistan
 // Real implementation with JazzCash integration
 
+import { createHash } from 'crypto'
+
 export interface PaymentRequest {
   amount: number
   currency: string
@@ -34,7 +36,7 @@ export interface PaymentResponse {
 
 // Real payment gateway service with PayFast integration
 export class PaymentService {
-  private apiKey: string
+  private apiKey: string = ''
   private secret: string
   private merchantId: string
   private baseUrl: string
@@ -91,7 +93,7 @@ export class PaymentService {
   private async processPayFastPayment(paymentRequest: PaymentRequest): Promise<PaymentResponse> {
     try {
       // PayFast API integration
-      const paymentData = {
+      const paymentData: Record<string, string> = {
         merchant_id: this.merchantId,
         merchant_key: this.secret,
         return_url: `${process.env.NEXT_PUBLIC_APP_URL}/orders/success?orderId=${paymentRequest.orderId}`,
@@ -115,13 +117,12 @@ export class PaymentService {
       }
 
       // Generate secure signature for PayFast
-      const crypto = require('crypto')
       const signatureString = Object.keys(paymentData)
         .filter(key => paymentData[key] !== '')
         .map(key => `${key}=${encodeURIComponent(paymentData[key])}`)
         .join('&')
       
-      const signature = crypto.createHash('md5').update(signatureString).digest('hex')
+      const signature = createHash('md5').update(signatureString).digest('hex')
       paymentData.signature = signature
 
       // For PayFast, we redirect to their payment page
@@ -196,10 +197,9 @@ export class PaymentService {
       }
 
       // Generate secure hash
-      const hashString = `${this.apiKey}&${paymentData.pp_Amount}&${paymentData.pp_BillReference}&${paymentData.pp_Description}&${paymentData.pp_IsRegisteredCustomer}&${paymentData.pp_Language}&${paymentData.pp_MerchantID}&${paymentData.pp_Password}&${paymentData.pp_ReturnURL}&${paymentData.pp_TxnCurrency}&${paymentData.pp_TxnDateTime}&${paymentData.pp_TxnExpiryDateTime}&${paymentData.pp_TxnRefNo}&${paymentData.pp_TxnType}&${paymentData.pp_Version}&${this.secret}`
+      const hashString = `${this.apiKey}&${paymentData.pp_Amount}&${paymentData.pp_BillReference}&${paymentData.pp_Description}&${paymentData.pp_Language}&${paymentData.pp_MerchantID}&${paymentData.pp_Password}&${paymentData.pp_ReturnURL}&${paymentData.pp_TxnCurrency}&${paymentData.pp_TxnDateTime}&${paymentData.pp_TxnExpiryDateTime}&${paymentData.pp_TxnRefNo}&${paymentData.pp_TxnType}&${paymentData.pp_Version}&${this.secret}`
       
-      const crypto = require('crypto')
-      paymentData.pp_SecureHash = crypto.createHash('sha256').update(hashString).digest('hex')
+      paymentData.pp_SecureHash = createHash('sha256').update(hashString).digest('hex')
 
       // Make API call to JazzCash
       const response = await fetch(`${this.baseUrl}/ApplicationAPI/API/Payment/DoTransaction`, {
