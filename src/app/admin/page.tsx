@@ -435,7 +435,7 @@ function ProductModal({
               <input
                 type="number"
                 value={formData.price}
-                onChange={(e) => setFormData(prev => ({ ...prev, price: e.target.value }))}
+                onChange={(e) => setFormData(prev => ({ ...prev, price: parseFloat(e.target.value) || 0 }))}
                 className="w-full p-2 border rounded"
                 required
               />
@@ -445,7 +445,7 @@ function ProductModal({
               <input
                 type="number"
                 value={formData.original_price}
-                onChange={(e) => setFormData(prev => ({ ...prev, original_price: e.target.value }))}
+                onChange={(e) => setFormData(prev => ({ ...prev, original_price: parseFloat(e.target.value) || 0 }))}
                 className="w-full p-2 border rounded"
               />
             </div>
@@ -454,7 +454,7 @@ function ProductModal({
               <input
                 type="number"
                 value={formData.stock_quantity}
-                onChange={(e) => setFormData(prev => ({ ...prev, stock_quantity: e.target.value }))}
+                onChange={(e) => setFormData(prev => ({ ...prev, stock_quantity: parseInt(e.target.value) || 0 }))}
                 className="w-full p-2 border rounded"
                 required
               />
@@ -499,7 +499,7 @@ function ProductModal({
               <label className="block text-sm font-medium mb-1">Condition</label>
               <select
                 value={formData.condition}
-                onChange={(e) => setFormData(prev => ({ ...prev, condition: e.target.value }))}
+                onChange={(e) => setFormData(prev => ({ ...prev, condition: e.target.value as "new" | "used" | "refurbished" }))}
                 className="w-full p-2 border rounded"
                 required
               >
